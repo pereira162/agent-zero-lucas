@@ -1,64 +1,83 @@
-<div align="center">
 
-# `Agent Zero`
+# Agent Zero
 
+Agent Zero é um framework de IA open-source dinâmico, modular e transparente, projetado para automação, pesquisa, desenvolvimento e integração de agentes inteligentes. Ele oferece uma arquitetura flexível baseada em agentes, ferramentas, memória, prompts, extensões e integração com protocolos MCP.
 
-[![Agent Zero Website](https://img.shields.io/badge/Website-agent--zero.ai-0A192F?style=for-the-badge&logo=vercel&logoColor=white)](https://agent-zero.ai) [![Thanks to Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Thanks%20to%20Sponsors-FF69B4?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/frdel) [![Follow on X](https://img.shields.io/badge/X-Follow-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Agent0ai) [![Join our Discord](https://img.shields.io/badge/Discord-Join%20our%20server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/B8KZKNsPpj) [![Subscribe on YouTube](https://img.shields.io/badge/YouTube-Subscribe-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@AgentZeroFW) [![Connect on LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jan-tomasek/) [![Follow on Warpcast](https://img.shields.io/badge/Warpcast-Follow-5A32F3?style=for-the-badge)](https://warpcast.com/agent-zero)
+## 🚀 Instalação Rápida (Docker)
 
-[Introduction](#a-personal-organic-agentic-framework-that-grows-and-learns-with-you) •
-[Installation](./docs/installation.md) •
-[Hacking Edition](#hacking-edition) •
-[How to update](./docs/installation.md#how-to-update-agent-zero) •
-[Documentation](./docs/README.md) •
-[Usage](./docs/usage.md)
+```bash
+docker pull frdel/agent-zero-run
+docker run -p 50001:80 frdel/agent-zero-run
+# Acesse http://localhost:50001
+```
 
-</div>
+## 📚 Documentação
 
+| Página | Descrição |
+|--------|-----------|
+| [Instalação](./docs/installation.md) | Instalação, setup e configuração |
+| [Uso](./docs/usage.md) | Uso básico e avançado |
+| [Arquitetura](./docs/architecture.md) | Design do sistema e componentes |
+| [Contribuição](./docs/contribution.md) | Como contribuir |
+| [Troubleshooting](./docs/troubleshooting.md) | Problemas comuns e soluções |
 
-<div align="center">
+## 💡 Principais Funcionalidades
 
-> ### 📢 **NEWS: Agent Zero now includes MCP Server & Client functionality!** 📢
->
-> Agent Zero can now act as an MCP Server for other LLM tools and use external MCP servers as tools
+- Execução de agentes hierárquicos e delegação de tarefas
+- Ferramentas integradas: execução de código, busca, memória, resposta, ajuste de comportamento, análise web
+- Memória persistente e sistema de sumarização de contexto
+- Suporte a extensões e integração com MCP (Model Context Protocol)
+- Interface Web UI moderna e interativa
+- Backup/restore, browser agent, TTS/STT, file browser, KaTeX, anexos em chat
 
-</div>
+## 🛠️ Estrutura do Projeto
 
+| Diretório | Descrição |
+|-----------|-----------|
+| /docker   | Arquivos Docker e runtime |
+| /docs     | Documentação e guias |
+| /instruments | Scripts customizados |
+| /knowledge | Base de conhecimento |
+| /logs     | Logs de chat e sistema |
+| /memory   | Memória persistente |
+| /prompts  | Prompts do sistema e ferramentas |
+| /python   | Código principal Python |
+| /webui    | Interface web |
 
+## 🧩 Componentes Centrais
 
-[![Showcase](/docs/res/showcase-thumb.png)](https://youtu.be/lazLNcEYsiQ)
+- **Agents**: Núcleo de decisão, raciocínio e execução
+- **Tools**: Ferramentas para busca, execução, memória, etc.
+- **Memory**: Sistema híbrido de memória e sumarização
+- **Prompts**: Controle de comportamento e comunicação
+- **Knowledge**: Base de dados e arquivos do usuário
+- **Instruments**: Scripts e integrações customizadas
+- **Extensions**: Modularidade e expansão de funcionalidades
 
+## 🔒 Segurança
 
+- Recomenda-se rodar em ambiente isolado (Docker)
+- Suporte a autenticação e configuração de senha
 
-## A personal, organic agentic framework that grows and learns with you
+## 📝 Atualização
 
+```bash
+docker stop agent-zero
+docker rm agent-zero
+docker rmi frdel/agent-zero-run
+docker pull frdel/agent-zero-run
+docker run -p $PORT:80 -v /path/to/your/data:/a0 frdel/agent-zero-run
+```
 
+## 🤝 Comunidade e Suporte
 
-- Agent Zero is not a predefined agentic framework. It is designed to be dynamic, organically growing, and learning as you use it.
-- Agent Zero is fully transparent, readable, comprehensible, customizable, and interactive.
-- Agent Zero uses the computer as a tool to accomplish its (your) tasks.
+- [Discord](https://discord.gg/B8KZKNsPpj)
+- [Skool](https://www.skool.com/agent-zero)
+- [YouTube](https://www.youtube.com/@AgentZeroFW)
+- [GitHub Issues](https://github.com/frdel/agent-zero/issues)
 
-# 💡 Key Features
-
-1. **General-purpose Assistant**
-
-- Agent Zero is not pre-programmed for specific tasks (but can be). It is meant to be a general-purpose personal assistant. Give it a task, and it will gather information, execute commands and code, cooperate with other agent instances, and do its best to accomplish it.
-- It has a persistent memory, allowing it to memorize previous solutions, code, facts, instructions, etc., to solve tasks faster and more reliably in the future.
-
-![Agent 0 Working](/docs/res/ui-screen-2.png)
-
-2. **Computer as a Tool**
-
-- Agent Zero uses the operating system as a tool to accomplish its tasks. It has no single-purpose tools pre-programmed. Instead, it can write its own code and use the terminal to create and use its own tools as needed.
-- The only default tools in its arsenal are online search, memory features, communication (with the user and other agents), and code/terminal execution. Everything else is created by the agent itself or can be extended by the user.
-- Tool usage functionality has been developed from scratch to be the most compatible and reliable, even with very small models.
-- **Default Tools:** Agent Zero includes tools like knowledge, webpage content, code execution, and communication.
-- **Creating Custom Tools:** Extend Agent Zero's functionality by creating your own custom tools.
-- **Instruments:** Instruments are a new type of tool that allow you to create custom functions and procedures that can be called by Agent Zero.
-
-3. **Multi-agent Cooperation**
-
-- Every agent has a superior agent giving it tasks and instructions. Every agent then reports back to its superior.
-- In the case of the first agent in the chain (Agent 0), the superior is the human user; the agent sees no difference.
+---
+Consulte a documentação completa em [docs/](./docs/README.md).
 - Every agent can create its subordinate agent to help break down and solve subtasks. This helps all agents keep their context clean and focused.
 
 ![Multi-agent](docs/res/physics.png)

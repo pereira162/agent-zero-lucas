@@ -320,6 +320,14 @@
                                     <span class="slider"></span>
                                 </label>
                             </li>
+                            <li x-data="{ simplifiedView: false }">
+                                <span>Simplified View</span>
+                                <label class="switch">
+                                    <input id="simplified-view-switch" type="checkbox" x-model="simplifiedView"
+                                        x-effect="window.safeCall('toggleSimplifiedView', simplifiedView)">
+                                    <span class="slider"></span>
+                                </label>
+                            </li>
                         </ul>
                     </span>
                 </div>

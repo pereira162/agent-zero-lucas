@@ -37,6 +37,38 @@ function createCopyButton() {
   return button;
 }
 
+function createCopyButtonForCode() {
+  const button = document.createElement("button");
+  button.className = "copy-code-button";
+  button.textContent = "Copy";
+  button.title = "Copy code";
+
+  button.addEventListener("click", async function (e) {
+    e.stopPropagation();
+    const wrapper = this.parentElement;
+    const preElement = wrapper.querySelector("pre");
+    if (!preElement) return;
+
+    const codeElement = preElement.querySelector("code");
+    const textToCopy = codeElement ? codeElement.innerText : preElement.innerText;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      const originalText = button.textContent;
+      button.classList.add("copied");
+      button.textContent = "Copied!";
+      setTimeout(() => {
+        button.classList.remove("copied");
+        button.textContent = originalText;
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy text:", err);
+    }
+  });
+
+  return button;
+}
+
 function addCopyButtonToElement(element) {
   if (!element.querySelector(".copy-button")) {
     element.appendChild(createCopyButton());
@@ -123,8 +155,22 @@ export function _drawMessage(
       }
 
       contentDiv.appendChild(spanElement);
-      addCopyButtonToElement(contentDiv);
       messageDiv.appendChild(contentDiv);
+
+      // Add copy buttons to code blocks
+      const codeBlocks = contentDiv.querySelectorAll('pre');
+      codeBlocks.forEach(preElement => {
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('code-block-wrapper');
+
+          // Move the pre element into the wrapper
+          preElement.parentNode.insertBefore(wrapper, preElement);
+          wrapper.appendChild(preElement);
+
+          const button = createCopyButtonForCode();
+          wrapper.appendChild(button);
+      });
+
     } else {
       const preElement = document.createElement("pre");
       preElement.classList.add("msg-content", ...contentClasses);

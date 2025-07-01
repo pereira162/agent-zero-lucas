@@ -263,6 +263,90 @@ function setMessage(id, type, heading, content, temp, kvps = null) {
   }
 
   if (autoScroll) chatHistory.scrollTop = chatHistory.scrollHeight;
+  updateMessageVisibility(); // Update visibility after adding a message
+}
+
+function updateMessageVisibility() {
+  const chatHistory = document.getElementById("chat-history");
+  const isSimplified = chatHistory.classList.contains("simplified-view");
+
+  if (!isSimplified) {
+    // Show all messages and remove working balloons
+    document.querySelectorAll('.message-container, .working-balloon').forEach(el => {
+      el.style.display = '';
+    });
+    document.querySelectorAll('.hidden-messages').forEach(el => el.classList.remove('hidden-messages'));
+    return;
+  }
+
+  const messages = Array.from(chatHistory.children);
+  let hiddenMessages = [];
+  let lastVisibleMessage = null;
+
+  messages.forEach((message, index) => {
+    if (message.classList.contains('working-balloon')) {
+        message.remove();
+        return;
+    }
+
+    const messageType = getMessageType(message);
+    const isVisibleType = messageType === 'user' || messageType === 'response' || messageType === 'delegation';
+
+    if (isVisibleType) {
+      if (hiddenMessages.length > 0) {
+        const balloon = createWorkingBalloon(hiddenMessages);
+        chatHistory.insertBefore(balloon, message);
+        hiddenMessages = [];
+      }
+      lastVisibleMessage = message;
+      message.style.display = '';
+    } else {
+      message.style.display = 'none';
+      hiddenMessages.push(message);
+    }
+  });
+
+  if (hiddenMessages.length > 0 && lastVisibleMessage) {
+    const balloon = createWorkingBalloon(hiddenMessages);
+    chatHistory.appendChild(balloon);
+  }
+}
+
+function getMessageType(messageElement) {
+    if (messageElement.querySelector('.message-user')) return 'user';
+    if (messageElement.querySelector('.message-agent-response')) return 'response';
+    if (messageElement.querySelector('.message-agent-delegation')) return 'delegation';
+    if (messageElement.querySelector('.message-tool')) return 'tool';
+    if (messageElement.querySelector('.message-agent')) return 'agent';
+    return 'other';
+}
+
+function createWorkingBalloon(hiddenMessages) {
+  const balloon = document.createElement('div');
+  balloon.className = 'working-balloon';
+  balloon.textContent = `Working... (${hiddenMessages.length} steps)`;
+
+  const hiddenContainer = document.createElement('div');
+  hiddenContainer.className = 'hidden-messages';
+  hiddenContainer.style.display = 'none';
+
+  hiddenMessages.forEach(msg => {
+    const clonedMsg = msg.cloneNode(true);
+    clonedMsg.style.display = ''; // Make sure cloned message is visible
+    hiddenContainer.appendChild(clonedMsg);
+  });
+
+  balloon.addEventListener('click', () => {
+    const isVisible = hiddenContainer.style.display === 'block';
+    hiddenContainer.style.display = isVisible ? 'none' : 'block';
+    balloon.textContent = isVisible ? `Working... (${hiddenMessages.length} steps)` : 'Hide steps';
+  });
+
+  const balloonWrapper = document.createElement('div');
+  balloonWrapper.appendChild(balloon);
+  balloonWrapper.appendChild(hiddenContainer);
+
+  return balloonWrapper;
 }
 
 window.loadKnowledge = async function () {
@@ -752,6 +836,17 @@ window.toggleUtils = async function (showUtils) {
   toggleCssProperty(".message-util", "display", showUtils ? undefined : "none");
   // toggleCssProperty('.message-util .msg-kvps', 'display', showUtils ? undefined : 'none');
   // toggleCssProperty('.message-util .msg-content', 'display', showUtils ? undefined : 'none');
+};
+
+window.toggleSimplifiedView = function (isSimplified) {
+  const chatHistory = document.getElementById("chat-history");
+  if (isSimplified) {
+    chatHistory.classList.add("simplified-view");
+  } else {
+    chatHistory.classList.remove("simplified-view");
+  }
+  // Re-render or update the view
+  updateMessageVisibility();
 };
 
 window.toggleDarkMode = function (isDark) {

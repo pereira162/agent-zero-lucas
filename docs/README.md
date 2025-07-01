@@ -1,14 +1,84 @@
+
 ![Agent Zero Logo](res/header.png)
 # Agent Zero Documentation
-To begin with Agent Zero, follow the links below for detailed guides on various topics:
 
-- **[Installation](installation.md):** Set up (or [update](installation.md#how-to-update-agent-zero)) Agent Zero on your system.
-- **[Usage Guide](usage.md):** Explore GUI features and usage scenarios.
-- **[Architecture Overview](architecture.md):** Understand the internal workings of the framework.
-- **[Contributing](contribution.md):** Learn how to contribute to the Agent Zero project.
-- **[Troubleshooting and FAQ](troubleshooting.md):** Find answers to common issues and questions.
+## Índice
 
-### Your experience with Agent Zero starts now!
+- [Instalação](installation.md)
+- [Guia de Uso](usage.md)
+- [Arquitetura](architecture.md)
+- [Contribuição](contribution.md)
+- [Troubleshooting](troubleshooting.md)
+
+## Visão Geral
+
+Agent Zero é um framework de IA open-source para automação, pesquisa, desenvolvimento e integração de agentes inteligentes. Ele oferece arquitetura modular baseada em agentes, ferramentas, memória, prompts, extensões e integração com MCP.
+
+## Instalação Rápida
+
+```bash
+docker pull frdel/agent-zero-run
+docker run -p 50001:80 frdel/agent-zero-run
+# Acesse http://localhost:50001
+```
+
+## Estrutura do Projeto
+
+| Diretório | Descrição |
+|-----------|-----------|
+| /docker   | Arquivos Docker e runtime |
+| /docs     | Documentação e guias |
+| /instruments | Scripts customizados |
+| /knowledge | Base de conhecimento |
+| /logs     | Logs de chat e sistema |
+| /memory   | Memória persistente |
+| /prompts  | Prompts do sistema e ferramentas |
+| /python   | Código principal Python |
+| /webui    | Interface web |
+
+## Componentes Centrais
+
+- **Agents**: Núcleo de decisão, raciocínio e execução
+- **Tools**: Ferramentas para busca, execução, memória, etc.
+- **Memory**: Sistema híbrido de memória e sumarização
+- **Prompts**: Controle de comportamento e comunicação
+- **Knowledge**: Base de dados e arquivos do usuário
+- **Instruments**: Scripts e integrações customizadas
+- **Extensions**: Modularidade e expansão de funcionalidades
+
+## Funcionalidades
+
+- Execução de agentes hierárquicos e delegação de tarefas
+- Ferramentas integradas: execução de código, busca, memória, resposta, ajuste de comportamento, análise web
+- Memória persistente e sistema de sumarização de contexto
+- Suporte a extensões e integração com MCP (Model Context Protocol)
+- Interface Web UI moderna e interativa
+- Backup/restore, browser agent, TTS/STT, file browser, KaTeX, anexos em chat
+
+## Segurança
+
+- Recomenda-se rodar em ambiente isolado (Docker)
+- Suporte a autenticação e configuração de senha
+
+## Atualização
+
+```bash
+docker stop agent-zero
+docker rm agent-zero
+docker rmi frdel/agent-zero-run
+docker pull frdel/agent-zero-run
+docker run -p $PORT:80 -v /path/to/your/data:/a0 frdel/agent-zero-run
+```
+
+## Comunidade e Suporte
+
+- [Discord](https://discord.gg/B8KZKNsPpj)
+- [Skool](https://www.skool.com/agent-zero)
+- [YouTube](https://www.youtube.com/@AgentZeroFW)
+- [GitHub Issues](https://github.com/frdel/agent-zero/issues)
+
+---
+Consulte a documentação detalhada em cada arquivo acima.
 
 - **Download Agent Zero:** Follow the [installation guide](installation.md) to download and run Agent Zero.
 - **Join the Community:** Join the Agent Zero [Skool](https://www.skool.com/agent-zero) or [Discord](https://discord.gg/Z2tun2N3) community to discuss ideas, ask questions, and collaborate with other contributors.
