@@ -1,8 +1,17 @@
 services:
+  agent-zero-base:
+    build:
+      context: ../../
+      dockerfile: ./docker/base/Dockerfile
+    image: agent-zero-base:local
+
   agent-zero:
+    depends_on:
+      - agent-zero-base
+    build:
+      context: ../../
+      dockerfile: ./docker/run/Dockerfile
     container_name: agent-zero
-    image: frdel/agent-zero:latest
-    volumes:
-      - ./agent-zero:/a0
+    restart: unless-stopped
     ports:
       - "50080:80"
