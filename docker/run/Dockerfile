@@ -7,8 +7,7 @@ ARG BRANCH
 RUN if [ -z "$BRANCH" ]; then echo "ERROR: BRANCH is not set!" >&2; exit 1; fi
 ENV BRANCH=$BRANCH
 
-# Copy contents of the project to /a0
-COPY ./fs/ /
+
 
 # pre installation steps
 RUN bash /ins/pre_install.sh $BRANCH
